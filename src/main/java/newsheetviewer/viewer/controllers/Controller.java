@@ -1,24 +1,24 @@
 package newsheetviewer.viewer.controllers;
 
 import lombok.AllArgsConstructor;
-import newsheetviewer.viewer.dto.CompaniesDto;
+import newsheetviewer.viewer.services.MySessionServices;
+import newsheetviewer.viewer.services.RestService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 
 @org.springframework.stereotype.Controller
 @AllArgsConstructor
 public class Controller {
 
-    RestTemplate restTemplate;
-
-    private String url = "http://localhost:8080/";
+    RestService restService;
+    MySessionServices mySessionServices;
 
     @GetMapping("/")
     public String mainSite(Model model) {
-        restTemplate.getForObject(url + "company", CompaniesDto.class, this);
+
+        model.addAttribute("companies", restService.getCompanies());
         return "main";
     }
 
@@ -37,6 +37,7 @@ public class Controller {
     public String getNewsFromCompany(@PathVariable("company") String company) {
         return "company";
     }
+
     @GetMapping("/company/{company}/article/{id}")
     public String getArticlesFromCompany(@PathVariable("company") String company,
                                          @PathVariable("id") Integer page) {

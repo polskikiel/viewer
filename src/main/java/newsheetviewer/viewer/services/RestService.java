@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Majk on 2017-10-21.
  */
 public interface RestService {
-    CompaniesDto getCompanies();
+    List<CompaniesDto> getCompanies();
 
     NewsDto getNews(String company);
 

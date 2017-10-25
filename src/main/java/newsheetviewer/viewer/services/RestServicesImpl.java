@@ -18,12 +18,13 @@ public class RestServicesImpl implements RestService {
     @Autowired
     RestTemplate restTemplate;
 
-    private final String url = "http://localhost:8080/";
+    private final String url = "http://localhost:8080/";        // url of Rest_news
 
     @Override
-    public CompaniesDto getCompanies() {
+    public List<CompaniesDto> getCompanies() {
         return restTemplate.exchange(url + "company",
-                HttpMethod.GET, HttpEntity.EMPTY, CompaniesDto.class).getBody();
+                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<CompaniesDto>>() {
+                }).getBody();
     }
 
     @Override
