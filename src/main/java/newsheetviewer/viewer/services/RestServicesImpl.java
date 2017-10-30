@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.ConnectException;
 import java.util.List;
 
 @Service
@@ -21,7 +22,7 @@ public class RestServicesImpl implements RestService {
     private final String url = "http://localhost:8080/";        // url of Rest_news
 
     @Override
-    public List<CompaniesDto> getCompanies() {
+    public List<CompaniesDto> getCompanies() throws ConnectException {
         return restTemplate.exchange(url + "company",
                 HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<CompaniesDto>>() {
                 }).getBody();
@@ -67,7 +68,7 @@ public class RestServicesImpl implements RestService {
 
     @Override
     public List<NewsDto> getNewsByLanguageOrCategory(String language, String[] cat) {
-        return restTemplate.exchange(url + "news?lang=" + language + "&cat=",
+        return restTemplate.exchange(url + "news?lang=" + language + "&cat=" + getUrl(cat),
                 HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<NewsDto>>() {
                 }).getBody();
     }
@@ -75,8 +76,11 @@ public class RestServicesImpl implements RestService {
     private String getUrl(String[] cat) {
         String result = "";
         for (String category : cat) {
-            if (category != cat[cat.length - 1])
+            if (category.equals(cat[cat.length - 1])) {
                 result += category + ",";
+            } else {
+                result += category;
+            }
         }
         return result;
     }

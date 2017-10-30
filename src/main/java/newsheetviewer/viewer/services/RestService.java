@@ -5,13 +5,14 @@ import newsheetviewer.viewer.dto.AuthorDto;
 import newsheetviewer.viewer.dto.CompaniesDto;
 import newsheetviewer.viewer.dto.NewsDto;
 
+import java.net.ConnectException;
 import java.util.List;
 
 /**
  * Created by Majk on 2017-10-21.
  */
 public interface RestService {
-    List<CompaniesDto> getCompanies();
+    List<CompaniesDto> getCompanies() throws ConnectException;
 
     NewsDto getNews(String company);
 

@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -20,5 +22,12 @@ public class MySession {
     List<NewsDto> visitedNews;
     List<AuthorDto> visitedAuthors;
     List<ArticleDto> visitedArticles;
-    List<CompaniesDto> companiesDto;
+    List<CompaniesDto> companies;
+
+    @PostConstruct
+    public void init() {
+        visitedArticles = new ArrayList<>();
+        visitedAuthors = new ArrayList<>();
+        visitedNews = new ArrayList<>();
+    }
 }
