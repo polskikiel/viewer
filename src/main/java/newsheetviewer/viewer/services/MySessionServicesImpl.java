@@ -20,7 +20,7 @@ public class MySessionServicesImpl implements MySessionServices {
     }
 
     @Getter
-    private String[] categories = {"General", "Sport", "Technology", "Business", "Music",
+    private String[] categories = {"General", "Sport", "Technology", "Business", "Politics", "Music",
             "Science/Nature", "Entertainment"};
     @Getter
     private String[] languages = {"English", "Deutsch"};

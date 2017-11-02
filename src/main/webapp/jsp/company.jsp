@@ -25,6 +25,8 @@
             <p>${news.name}</p>
             <p>Category: ${news.category}</p>
             <p>Language: ${news.language}</p>
+            <br/>
+            <p>${news.description}</p>
         </div>
 
 

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.ConnectException;
 
@@ -27,21 +28,27 @@ public class Controller {
         model.addAttribute("languages", mySessionServices.getLanguages());
 
 
-        if (!mySessionServices.isContainsCompanies()) {
+        if (!mySessionServices.isContainsCompanies() || mySessionServices.getSession().getCompanies().size() == 0) {
             try {
                 mySessionServices.setCompanies(restService.getCompanies());
-
-                model.addAttribute("companies",
-                        mySessionServices.getByLangAndCategory(
-                                mySessionServices.getLanguage(lang), categories));
-
             } catch (ConnectException c) {
                 System.out.println("CONNECTION REFUSED");
             }
         }
+        model.addAttribute("companies",
+                mySessionServices.getByLangAndCategory(
+                        mySessionServices.getLanguage(lang), categories));
         return "main";
     }
 
+    @GetMapping("/search")
+    @ResponseBody
+    public String search(@RequestParam String search, Model model) {
+        if (search != null) {
+            model.addAttribute("searchInput", search);
+        }
+        return "main";
+    }
 
     @GetMapping("/articles")
     public String allArticles(@RequestParam(value = "page", defaultValue = "0", required = false) Integer page) {

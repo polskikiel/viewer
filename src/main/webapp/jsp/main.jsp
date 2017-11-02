@@ -11,17 +11,20 @@
     <meta name="description" content="News"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/> " type="text/css">
+    <script type="text/javascript" src="../resources/js/ajax.js"></script>
 
     <link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet'
           type='text/css'/>
 </head>
-<body>
+<body onload="process()">
 <jsp:include page="topbar.jsp"/>
 
 <main class="site mrg-5">
     <section class="search col-2">
         SEARCH<br/>
-        <input><br/><br/>
+        <input id="companySearch"/>
+        <div id="ajax"></div>
+        <br/><br/>
         CATEGORIES<br/>
         <hr/>
         <br/>
@@ -51,8 +54,6 @@
             <section class="mrg-3 col-3 company">
                 <a href="/company/${company.company}">
                         ${company.name}
-                    <br/>
-                        ${company.category}
                     <br/>
                     <img src="${company.imgUrl}" class="companyPhoto">
                 </a>
